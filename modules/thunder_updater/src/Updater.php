@@ -291,14 +291,17 @@ class Updater implements UpdaterInterface {
         else {
           $updateLogger->warning(t('Unable to enable @module.', ['@module' => $module]));
           $this->markUpdatesFailed([$update]);
+          return FALSE;
         }
       }
       catch (MissingDependencyException $e) {
         $this->markUpdatesFailed([$update]);
         $updateLogger->warning(t('Unable to enable @module because of missing dependencies.', ['@module' => $module]));
+        return FALSE;
       }
     }
     $this->markUpdatesSuccessful($successful);
+    return TRUE;
   }
 
 }

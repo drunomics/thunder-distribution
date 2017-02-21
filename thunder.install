@@ -426,3 +426,50 @@ function thunder_update_8106() {
 
   return $updateLogger->outputHtml();
 }
+
+/**
+ * Installs the diff module.
+ */
+function thunder_update_8107() {
+
+  $thunderUpdater = \Drupal::service('thunder_updater');
+
+  /** @var \Drupal\thunder\ThunderUpdateLogger $updateLogger */
+  $updateLogger = \Drupal::service('logger.thunder_update');
+  $updateLogger->cleanLogs();
+
+  $updates = [
+    'v1_1__views_autocomplete_filters' => 'views_autocomplete_filters',
+  ];
+
+  if ($thunderUpdater->installModules($updates, $updateLogger)) {
+
+    /** @var \Drupal\thunder_updater\ConfigHelper $helper */
+    $helper = \Drupal::service('thunder_updater.config.helper');
+    $reverter = \Drupal::service('config_update.config_update');
+
+    $hash = 'MpLF2dxW81TfwiOqZu8eu2IjlpqUGsObEVy5jajIVdw';
+    if (!$helper->isModified('views.view.image_browser', $hash)) {
+      $reverter->revert('view', 'image_browser');
+    }
+    else {
+      $thunderUpdater->markUpdatesFailed(['v1_1__views_autocomplete_filters']);
+    }
+
+    $hash = 'T4BCkJ-e9xYXdW4IAcPjSpdgzDKirI3HHSJ12HQ-J2Q';
+    if (!$helper->isModified('views.view.video_browser', $hash)) {
+      $reverter->revert('view', 'video_browser');
+    }
+    else {
+      $thunderUpdater->markUpdatesFailed(['v1_1__views_autocomplete_filters']);
+    }
+  }
+
+  if (function_exists('drush_log') && PHP_SAPI === 'cli') {
+    $updateLogger->outputDrush();
+
+    return '';
+  }
+
+  return $updateLogger->outputHtml();
+}

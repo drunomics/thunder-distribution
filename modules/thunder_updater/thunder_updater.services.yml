@@ -2,3 +2,6 @@ services:
   thunder_updater:
     class: Drupal\thunder_updater\Updater
     arguments: ['@user.shared_tempstore', '@config.factory', '@module_installer']
+  thunder_updater.config.helper:
+    class: Drupal\thunder_updater\ConfigHelper
+    arguments: ['@config.storage']
