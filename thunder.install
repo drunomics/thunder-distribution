@@ -57,6 +57,8 @@ function thunder_install() {
   // Disable default media view, cause we have our own.
   View::load('media')->setStatus(FALSE)->save();
 
+  \Drupal::service('thunder_updater')->markAllUpdates();
+
 }
 
 /**
@@ -386,6 +388,32 @@ function thunder_update_8105() {
 
   $updates = [
     'v1_1__config_update' => 'config_update',
+  ];
+
+  $thunderUpdater->installModules($updates, $updateLogger);
+
+  if (function_exists('drush_log') && PHP_SAPI === 'cli') {
+    $updateLogger->outputDrush();
+
+    return '';
+  }
+
+  return $updateLogger->outputHtml();
+}
+
+/**
+ * Installs the diff module.
+ */
+function thunder_update_8106() {
+
+  $thunderUpdater = \Drupal::service('thunder_updater');
+
+  /** @var \Drupal\thunder\ThunderUpdateLogger $updateLogger */
+  $updateLogger = \Drupal::service('logger.thunder_update');
+  $updateLogger->cleanLogs();
+
+  $updates = [
+    'v1_1__diff' => 'diff',
   ];
 
   $thunderUpdater->installModules($updates, $updateLogger);
