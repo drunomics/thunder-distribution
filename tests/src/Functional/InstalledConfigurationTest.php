@@ -146,6 +146,7 @@ class InstalledConfigurationTest extends ThunderBaseTest {
     'views.view.media' => [
       'dependencies' => [
         'config' => TRUE,
+        'module' => TRUE,
       ],
       'status' => TRUE,
     ],
@@ -154,6 +155,20 @@ class InstalledConfigurationTest extends ThunderBaseTest {
     'views.view.glossary' => [
       'dependencies' => [
         'config' => TRUE,
+      ],
+    ],
+
+    // Module dependency to views_autocomplete_filter ignored.
+    'views.view.scheduler_scheduled_content' => [
+      'dependencies' => [
+        'module' => TRUE,
+      ],
+    ],
+
+    // Module dependency to views_autocomplete_filter ignored.
+    'views.view.thunder_media' => [
+      'dependencies' => [
+        'module' => TRUE,
       ],
     ],
 

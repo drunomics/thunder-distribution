@@ -70,6 +70,9 @@
             },
             "drupal/diff": {
                 "Back button for comparison page": "https://www.drupal.org/files/issues/back_button_for-2853193-4.patch"
+            },
+            "drupal/views_autocomplete_filters": {
+                "Add missing schema": "https://www.drupal.org/files/issues/add_missing_schema-2855226-2.patch"
             }
         }
     },

@@ -226,6 +226,8 @@ projects:
       url: "https://git.drupal.org/project/views_autocomplete_filters.git"
       revision: "2915a742434bbb38b36edda4e98754698da33aed"
       branch: "8.x-1.x"
+    patch:
+      - "https://www.drupal.org/files/issues/add_missing_schema-2855226-2.patch"
 
   views_load_more:
     type: "module"
